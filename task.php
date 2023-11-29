@@ -17,7 +17,6 @@ class TaskManager {
     public function addTask($name, $description, $image, $date) {
         $stmt = $this->db->prepare('INSERT INTO tasks (task_name, task_description, task_image, task_date)
                                 VALUES (:name, :description, :image, :date)');
-
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':description', $description);
         $stmt->bindParam(':image', $image);
@@ -33,6 +32,15 @@ class TaskManager {
 
         return $stmt->execute();
     }
+
+    // Método para atualizar uma tarefa
+    public function updateTaskDescription($id, $newDescription) {
+        $stmt = $this->db->prepare('UPDATE tasks SET task_description = :description WHERE id = :id');
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':description', $newDescription);
+        return $stmt->execute();
+    }
+
 }
 
 // Cria uma instância do TaskManager, passando a conexão do banco de dados como parâmetro
